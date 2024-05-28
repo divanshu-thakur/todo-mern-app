@@ -18,7 +18,7 @@ let signUp = async (request, response) => {
 let signIn = async (request, response) => {
 	validateRequest(request, validator.signIn);
 
-	let userObj = await service.signIn(request.body.userName, request.body.password);
+	let userObj = await service.signIn(request.body.userNameOrEmail, request.body.password);
 
 	response.json({
 		status: RESPONSE_STATUS.SUCCESS,

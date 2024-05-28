@@ -1,4 +1,7 @@
 import SignUpImage from "../images/signup-image.jpg";
+import { FaUser, FaLock } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   return (
@@ -12,29 +15,32 @@ const SignUp = () => {
               <form method="POST" className="register-form" id="register-form">
                 <div className="form-group">
                   <label for="name">
-                    <i className="zmdi zmdi-account material-icons-name"></i>
+                    {/* <i className="zmdi zmdi-account material-icons-name"></i> */}
+                    <FaUser />
                   </label>
                   <input
                     type="text"
                     name="name"
                     id="name"
-                    placeholder="Your Name"
+                    placeholder="Username"
                   />
                 </div>
                 <div className="form-group">
                   <label for="email">
-                    <i className="zmdi zmdi-email"></i>
+                    {/* <i className="zmdi zmdi-email"></i> */}
+                    <MdEmail />
                   </label>
                   <input
                     type="email"
                     name="email"
                     id="email"
-                    placeholder="Your Email"
+                    placeholder="Email"
                   />
                 </div>
                 <div className="form-group">
                   <label for="pass">
-                    <i className="zmdi zmdi-lock"></i>
+                    {/* <i className="zmdi zmdi-lock"></i> */}
+                    <FaLock />
                   </label>
                   <input
                     type="password"
@@ -45,13 +51,14 @@ const SignUp = () => {
                 </div>
                 <div className="form-group">
                   <label for="re-pass">
-                    <i className="zmdi zmdi-lock-outline"></i>
+                    {/* <i className="zmdi zmdi-lock-outline"></i> */}
+                    <FaLock />
                   </label>
                   <input
                     type="password"
                     name="re_pass"
                     id="re_pass"
-                    placeholder="Repeat your password"
+                    placeholder="Confirm Password"
                   />
                 </div>
                 {/* <div className="form-group">
@@ -86,9 +93,9 @@ const SignUp = () => {
               <figure>
                 <img src={SignUpImage} alt="sign up image" />
               </figure>
-              <a href="#" className="signup-image-link">
+              <Link to="/SignIn" className="signup-image-link">
                 Already have an account?
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -18,9 +18,14 @@ let findByEmail = (email) => {
 	return model.findOne({ email, active: true });
 };
 
+let findByUserNameOrEmail = (userNameOrEmail) => {
+	return model.findOne({ $or: [{ userName: userNameOrEmail }, { email: userNameOrEmail }], active: true });
+};
+
 module.exports = {
 	createUser,
 	findById,
 	findByUserName,
 	findByEmail,
+	findByUserNameOrEmail,
 };

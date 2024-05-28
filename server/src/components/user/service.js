@@ -26,10 +26,10 @@ let signUp = async (data) => {
 	await DAL.createUser(createUserObj);
 
 	return;
-};// make git repo then add active condition in all apis then integrate it with front end
+};//make changes in front end and update below fuction to allow both username and email
 
-let signIn = async (userName, password) => {
-	let userObj = await DAL.findByUserName(userName);
+let signIn = async (userNameOrEmail, password) => {
+	let userObj = await DAL.findByUserNameOrEmail(userNameOrEmail);
 
 	if (userObj) {
 		let didPasswordMatch = await bcryptUtil.comparePassword(password, userObj.password);

@@ -1,4 +1,6 @@
 import SignInImage from "../images/signin-image.jpg";
+import { FaUser, FaLock } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   return (
@@ -21,18 +23,20 @@ const SignIn = () => {
               <form method="POST" className="register-form" id="login-form">
                 <div className="form-group">
                   <label for="your_name">
-                    <i className="zmdi zmdi-account material-icons-name"></i>
+                    {/* <i className="zmdi zmdi-account material-icons-name"></i> */}
+                    <FaUser />
                   </label>
                   <input
                     type="text"
                     name="your_name"
                     id="your_name"
-                    placeholder="Your Name"
+                    placeholder="Username/Email"
                   />
                 </div>
                 <div className="form-group">
                   <label for="your_pass">
-                    <i className="zmdi zmdi-lock"></i>
+                    {/* <i className="zmdi zmdi-lock"></i> */}
+                    <FaLock />
                   </label>
                   <input
                     type="password"
@@ -66,9 +70,9 @@ const SignIn = () => {
                 </div>
               </form>
               <div className="social-login">
-                <a href="#" className="signup-image-link">
+                <Link to="/SignUp" className="signup-image-link">
                   Create an account
-                </a>
+                </Link>
                 {/* <span className="social-label">Or login with</span>
                   <ul className="socials">
                     <li>
