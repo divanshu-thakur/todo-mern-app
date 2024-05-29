@@ -4,7 +4,7 @@ const LS_KEY = {
 
 const set = {
     authToken: (data) => {
-        localStorage.setItem(LS_KEY.auth_token, "Bearer" + " " + data);
+        localStorage.setItem(LS_KEY.auth_token, `Bearer ${data}`/* "Bearer" + " " + data */);
     },
 }
 
