@@ -7,4 +7,5 @@ let requestUserSignUp = async (data) => {
 const AuthenticationApi = {
     requestUserSignUp,
 };
+
 export default AuthenticationApi;
