@@ -417,15 +417,16 @@ figure {
   background: #4292dc;
 }
 
-#signin {
+/* #signin {
   margin-top: 16px;
-}
+} */
 
 .signup-image-link {
   font-size: 14px;
   color: #222;
   display: block;
   text-align: center;
+  text-decoration: none;
 }
 
 .term-service {
@@ -778,6 +779,24 @@ label.valid:after {
     margin-right: 0px;
     margin-bottom: 10px;
   }
+}
+
+footer {
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #f8f8f8;
+}
+footer a {
+  text-decoration: none;
+  color: #ff4800;
+}
+footer a:hover {
+  color: #4caf50;
 }
 
 /*# sourceMappingURL=style.css.map */
