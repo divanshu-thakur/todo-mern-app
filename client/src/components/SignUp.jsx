@@ -3,6 +3,7 @@ import { FaUser, FaLock } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
+import * as yup from "yup";
 
 const initialValues = {
   userName: "",
@@ -11,13 +12,31 @@ const initialValues = {
   confirmPassword: "",
 };
 
+const validationSchema = yup.object().shape({
+  userName: yup.string().required("Username is required"),
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Please enter a valid email"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password must contain 8 characters"),
+  confirmPassword: yup
+    .string()
+    .required("Please re-enter your password")
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
+});
+
 const SignUp = () => {
-  const { values, errors, handleChange, handleBlur, handleSubmit } = useFormik({
-    initialValues,
-    onSubmit: (values) => {
-      console.log(values);
-    },
-  });
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema,
+      onSubmit: (values) => {
+        console.log(values);
+      },
+    });
 
   return (
     <>
@@ -41,6 +60,9 @@ const SignUp = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
+                  {errors.userName && touched.userName && (
+                    <span className="error">{errors.userName}</span>
+                  )}
                 </div>
                 <div className="form-group">
                   <label>
@@ -55,6 +77,9 @@ const SignUp = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
+                  {errors.email && touched.email && (
+                    <span className="error">{errors.email}</span>
+                  )}
                 </div>
                 <div className="form-group">
                   <label>
@@ -69,6 +94,9 @@ const SignUp = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
+                  {errors.password && touched.password && (
+                    <span className="error">{errors.password}</span>
+                  )}
                 </div>
                 <div className="form-group">
                   <label>
@@ -83,6 +111,9 @@ const SignUp = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
+                  {errors.confirmPassword && touched.confirmPassword && (
+                    <span className="error">{errors.confirmPassword}</span>
+                  )}
                 </div>
                 {/* <div className="form-group">
                     <input

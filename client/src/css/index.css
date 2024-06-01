@@ -781,6 +781,13 @@ label.valid:after {
   }
 }
 
+.error {
+  color: red;
+  position: fixed;
+  font-size: 12px;
+  padding-left: 30px;
+}
+
 footer {
   padding: 10px 0;
   display: flex;
