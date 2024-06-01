@@ -1,6 +1,6 @@
 import axios from "axios";
 // import { toast } from "react-toastify";
-import { API_URL } from "./apiUrl";
+import { API_URL } from "./apiURL";
 // import { storage } from "./storage";
 
 export const PostRequest = async (url, data) => {
@@ -16,7 +16,7 @@ export const PostRequest = async (url, data) => {
             },
         });
         return res ? res : res.data;
-    } catch (err) { }
+    } catch (err) { console.log(err); }
 };
 
 export const Api = {

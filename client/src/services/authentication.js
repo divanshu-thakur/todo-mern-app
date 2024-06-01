@@ -1,7 +1,8 @@
 import { Api } from "../config/request";
 
 let requestUserSignUp = async (data) => {
-    return Api.PostRequest("/user/signUp", data);
+    let response = await Api.PostRequest("user/signUp", data);
+    return response.data;
 };
 
 const AuthenticationApi = {

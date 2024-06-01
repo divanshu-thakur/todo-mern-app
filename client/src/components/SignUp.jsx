@@ -1,9 +1,12 @@
 import SignUpImage from "../images/signup-image.jpg";
 import { FaUser, FaLock } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import toast, { Toaster } from "react-hot-toast";
+import AuthenticationApi from "../services/authentication";
+import { RESPONSE_STATUS } from "../constants/status";
 
 const initialValues = {
   userName: "",
@@ -29,17 +32,37 @@ const validationSchema = yup.object().shape({
 });
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema,
-      onSubmit: (values) => {
-        console.log(values);
+      onSubmit: async (values) => {
+        console.log("values", values);
+        let data = await AuthenticationApi.requestUserSignUp({
+          userName: values.userName,
+          email: values.email,
+          password: values.password,
+        });
+        console.log("data", data);
+        if (data.status === RESPONSE_STATUS.SUCCESS) {
+          toast.success("Account created successfully. Please Signin.", {
+            id: "registrationSuccess",
+          });
+          navigate("/SignIn"); // toast not visible
+        } else if (data.status === RESPONSE_STATUS.ERROR) {
+          console.log(data.message);
+          toast.error(data.message, {
+            id: "registrationError",
+          });
+        }
       },
     });
 
   return (
     <>
+      <Toaster />
       <div className="main">
         {/* <section className="signup"> */}
         <div className="container">
