@@ -4,7 +4,7 @@ import { MdEmail } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import AuthenticationApi from "../services/authentication";
 import { RESPONSE_STATUS } from "../constants/status";
 
@@ -39,20 +39,19 @@ const SignUp = () => {
       initialValues,
       validationSchema,
       onSubmit: async (values) => {
-        console.log("values", values);
         let data = await AuthenticationApi.requestUserSignUp({
           userName: values.userName,
           email: values.email,
           password: values.password,
         });
-        console.log("data", data);
+
         if (data.status === RESPONSE_STATUS.SUCCESS) {
           toast.success("Account created successfully. Please Signin.", {
             id: "registrationSuccess",
+            duration: 4000,
           });
-          navigate("/SignIn"); // toast not visible
+          navigate("/SignIn");
         } else if (data.status === RESPONSE_STATUS.ERROR) {
-          console.log(data.message);
           toast.error(data.message, {
             id: "registrationError",
           });
@@ -62,7 +61,6 @@ const SignUp = () => {
 
   return (
     <>
-      <Toaster />
       <div className="main">
         {/* <section className="signup"> */}
         <div className="container">
