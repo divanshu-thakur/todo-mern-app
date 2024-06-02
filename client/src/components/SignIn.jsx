@@ -1,8 +1,55 @@
 import SignInImage from "../images/signin-image.jpg";
 import { FaUser, FaLock } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import toast from "react-hot-toast";
+import AuthenticationApi from "../services/authentication";
+import { RESPONSE_STATUS } from "../constants/status";
+
+const initialValues = {
+  email: "",
+  password: "",
+};
+
+const validationSchema = yup.object().shape({
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Please enter a valid email"),
+  password: yup.string().required("Password is required"),
+});
 
 const SignIn = () => {
+  const navigate = useNavigate();
+
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema,
+      onSubmit: async (values) => {
+        console.log("values", values);
+        let data = await AuthenticationApi.requestUserSignUp({
+          userName: values.userName,
+          email: values.email,
+          password: values.password,
+        });
+        console.log("data", data);
+        if (data.status === RESPONSE_STATUS.SUCCESS) {
+          toast.success("Account created successfully. Please Signin.", {
+            id: "registrationSuccess",
+            duration: 4000,
+          });
+          navigate("/SignIn");
+        } else if (data.status === RESPONSE_STATUS.ERROR) {
+          console.log(data.message);
+          toast.error(data.message, {
+            id: "registrationError",
+          });
+        }
+      },
+    });
+
   return (
     <>
       <div className="main">
@@ -71,7 +118,7 @@ const SignIn = () => {
               </form>
               <div className="social-login">
                 <Link to="/SignUp" className="signup-image-link">
-                  Create an account
+                  Create a new account!
                 </Link>
                 {/* <span className="social-label">Or login with</span>
                   <ul className="socials">
