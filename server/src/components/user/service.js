@@ -26,7 +26,7 @@ let signUp = async (data) => {
 	await DAL.createUser(createUserObj);
 
 	return;
-};//make changes in front end and update below fuction to allow both username and email
+};
 
 let signIn = async (userNameOrEmail, password) => {
 	let userObj = await DAL.findByUserNameOrEmail(userNameOrEmail);

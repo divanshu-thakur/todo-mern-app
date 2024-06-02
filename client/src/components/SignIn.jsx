@@ -6,17 +6,15 @@ import * as yup from "yup";
 import toast from "react-hot-toast";
 import AuthenticationApi from "../services/authentication";
 import { RESPONSE_STATUS } from "../constants/status";
+import { storage } from "../config/storage";
 
 const initialValues = {
-  email: "",
+  userNameOrEmail: "",
   password: "",
 };
 
 const validationSchema = yup.object().shape({
-  email: yup
-    .string()
-    .required("Email is required")
-    .email("Please enter a valid email"),
+  userNameOrEmail: yup.string().required("Username or Email is required"),
   password: yup.string().required("Password is required"),
 });
 
@@ -28,25 +26,22 @@ const SignIn = () => {
       initialValues,
       validationSchema,
       onSubmit: async (values) => {
-        console.log("values", values);
-        /* let data = await AuthenticationApi.requestUserSignUp({
-          userName: values.userName,
-          email: values.email,
+        let data = await AuthenticationApi.requestUserSignIn({
+          userNameOrEmail: values.userNameOrEmail,
           password: values.password,
         });
-        console.log("data", data);
+
         if (data.status === RESPONSE_STATUS.SUCCESS) {
-          toast.success("Account created successfully. Please Signin.", {
-            id: "registrationSuccess",
-            duration: 4000,
+          storage.set.authToken(data.authToken);
+          toast.success("Signed In successfully", {
+            id: "authSuccess",
           });
-          navigate("/SignIn");
+          setTimeout(() => window.location.reload(), 2000);
         } else if (data.status === RESPONSE_STATUS.ERROR) {
-          console.log(data.message);
           toast.error(data.message, {
-            id: "registrationError",
+            id: "authError",
           });
-        } */
+        }
       },
     });
 
@@ -75,14 +70,14 @@ const SignIn = () => {
                   </label>
                   <input
                     type="text"
-                    name="email"
+                    name="userNameOrEmail"
                     placeholder="Username/Email"
-                    value={values.email}
+                    value={values.userNameOrEmail}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                  {errors.email && touched.email && (
-                    <span className="error">{errors.email}</span>
+                  {errors.userNameOrEmail && touched.userNameOrEmail && (
+                    <span className="error">{errors.userNameOrEmail}</span>
                   )}
                 </div>
                 <div className="form-group">

@@ -32,7 +32,7 @@ const ERROR_INFO = {
 	[ERROR_CODES.USER_NAME_TAKEN]: 'Username already taken',
 	[ERROR_CODES.EMAIL_TAKEN]: 'An account is already associated with this email address',
 	[ERROR_CODES.INVALID_EMAIL]: 'Please fill a valid email address',
-	[ERROR_CODES.INVALID_USERNAME_OR_PASSWORD]: 'Invalid Username or Password',
+	[ERROR_CODES.INVALID_USERNAME_OR_PASSWORD]: 'Invalid Username/Email or Password',
 };
 
 module.exports = {
