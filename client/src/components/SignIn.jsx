@@ -29,7 +29,7 @@ const SignIn = () => {
       validationSchema,
       onSubmit: async (values) => {
         console.log("values", values);
-        let data = await AuthenticationApi.requestUserSignUp({
+        /* let data = await AuthenticationApi.requestUserSignUp({
           userName: values.userName,
           email: values.email,
           password: values.password,
@@ -46,7 +46,7 @@ const SignIn = () => {
           toast.error(data.message, {
             id: "registrationError",
           });
-        }
+        } */
       },
     });
 
@@ -66,31 +66,41 @@ const SignIn = () => {
             </div>
 
             <div className="signin-form">
-              <h2 className="form-title">Sign in</h2>
-              <form method="POST" className="register-form" id="login-form">
+              <h2 className="form-title">Sign In</h2>
+              <form className="register-form" onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <label for="your_name">
+                  <label>
                     {/* <i className="zmdi zmdi-account material-icons-name"></i> */}
                     <FaUser />
                   </label>
                   <input
                     type="text"
-                    name="your_name"
-                    id="your_name"
+                    name="email"
                     placeholder="Username/Email"
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
+                  {errors.email && touched.email && (
+                    <span className="error">{errors.email}</span>
+                  )}
                 </div>
                 <div className="form-group">
-                  <label for="your_pass">
+                  <label>
                     {/* <i className="zmdi zmdi-lock"></i> */}
                     <FaLock />
                   </label>
                   <input
                     type="password"
-                    name="your_pass"
-                    id="your_pass"
+                    name="password"
                     placeholder="Password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
+                  {errors.password && touched.password && (
+                    <span className="error">{errors.password}</span>
+                  )}
                 </div>
                 {/* <div className="form-group">
                   <input
@@ -109,10 +119,8 @@ const SignIn = () => {
                 <div className="form-group form-button">
                   <input
                     type="submit"
-                    name="signin"
-                    id="signin"
                     className="form-submit"
-                    value="Log in"
+                    value="Sign In"
                   />
                 </div>
               </form>

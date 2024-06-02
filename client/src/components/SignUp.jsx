@@ -66,7 +66,7 @@ const SignUp = () => {
         <div className="container">
           <div className="signup-content">
             <div className="signup-form">
-              <h2 className="form-title">Sign up</h2>
+              <h2 className="form-title">Sign Up</h2>
               <form className="register-form" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label>
@@ -157,7 +157,7 @@ const SignUp = () => {
                   <input
                     type="submit"
                     className="form-submit"
-                    value="Register"
+                    value="Sign Up"
                   />
                 </div>
               </form>
