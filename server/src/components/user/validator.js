@@ -16,7 +16,16 @@ const signIn = {
 	}),
 };
 
+const updateProfile = {
+	body: Joi.object().keys({
+		userName: Joi.string().optional(),
+		email: Joi.string().optional(),
+		password: Joi.string().optional(),
+	}),
+};
+
 module.exports = {
 	signUp,
 	signIn,
+	updateProfile,
 };

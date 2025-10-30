@@ -1,4 +1,5 @@
 
+const validator = require("validator");
 const DAL = require('./DAL');
 const bcryptUtil = require('../../utils/bcrypt');
 const jwtUtil = require('../../utils/jwt');
@@ -9,8 +10,8 @@ let signUp = async (data) => {
 	let duplicateUserObj = await DAL.findByUserName(data.userName);
 	if (duplicateUserObj) throw new AppError(ERROR_CODES.USER_NAME_TAKEN);
 
-	let regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/; // regex to validate email
-	if (!regex.test(data.email)) throw new AppError(ERROR_CODES.INVALID_EMAIL);
+	// let regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/; // regex to validate email
+	if (!validator.isEmail(data.email)) throw new AppError(ERROR_CODES.INVALID_EMAIL);
 
 	duplicateUserObj = await DAL.findByEmail(data.email);
 	if (duplicateUserObj) throw new AppError(ERROR_CODES.EMAIL_TAKEN);
@@ -49,7 +50,34 @@ let signIn = async (userNameOrEmail, password) => {
 	}
 };
 
+let updateProfile = async (userId, updateData) => {
+	// Validate email if being updated
+	if (updateData.email) {
+		// let regex = /^\\w+([\\.\\-]?\\w+)*@\\w+([\\.\\-]?\\w+)*(\\.\\w{2,3})+$/;
+		if (!validator.isEmail(updateData.email)) throw new AppError(ERROR_CODES.INVALID_EMAIL);
+		
+		let duplicateUserObj = await DAL.findByEmailExcludingUser(updateData.email, userId);
+		if (duplicateUserObj) throw new AppError(ERROR_CODES.EMAIL_TAKEN);
+	}
+
+	// Validate username if being updated
+	if (updateData.userName) {
+		let duplicateUserObj = await DAL.findByUserNameExcludingUser(updateData.userName, userId);
+		if (duplicateUserObj) throw new AppError(ERROR_CODES.USER_NAME_TAKEN);
+	}
+
+	// Hash password if being updated
+	if (updateData.password) {
+		updateData.password = await bcryptUtil.hashPassword(updateData.password);
+	}
+
+	let updatedUser = await DAL.updateUser(userId, updateData);
+	delete updatedUser.password;
+	return updatedUser;
+};
+
 module.exports = {
 	signUp,
 	signIn,
+	updateProfile,
 };

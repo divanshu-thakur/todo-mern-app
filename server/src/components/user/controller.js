@@ -34,8 +34,30 @@ let getProfile = async (request, response) => {
 	});
 };
 
+let updateProfile = async (request, response) => {
+	validateRequest(request, validator.updateProfile);
+
+	let userObj = request.userObj;
+	let updatedUser = await service.updateProfile(userObj._id, request.body);
+
+	response.json({
+		status: RESPONSE_STATUS.SUCCESS,
+		data: updatedUser,
+	});
+};
+
+let logout = async (request, response) => {
+	// For future (token blacklisting)
+	response.json({
+		status: RESPONSE_STATUS.SUCCESS,
+		message: 'Logged out successfully',
+	});
+};
+
 module.exports = {
 	signUp,
 	signIn,
 	getProfile,
+	updateProfile,
+	logout,
 };
