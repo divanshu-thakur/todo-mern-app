@@ -15,6 +15,10 @@ const ERROR_CODES = {
 	EMAIL_TAKEN: -20101,
 	INVALID_EMAIL: -20102,
 	INVALID_USERNAME_OR_PASSWORD: -20103,
+
+	//todo error codes
+	TODO_NOT_FOUND: -30100,
+	SUBTASK_NOT_FOUND: -30101,
 };
 
 const ERROR_INFO = {
@@ -33,6 +37,10 @@ const ERROR_INFO = {
 	[ERROR_CODES.EMAIL_TAKEN]: 'An account is already associated with this email address',
 	[ERROR_CODES.INVALID_EMAIL]: 'Please fill a valid email address',
 	[ERROR_CODES.INVALID_USERNAME_OR_PASSWORD]: 'Invalid Username/Email or Password',
+
+	// todo error info
+	[ERROR_CODES.TODO_NOT_FOUND]: 'Todo not found or access denied',
+	[ERROR_CODES.SUBTASK_NOT_FOUND]: 'Subtask not found',
 };
 
 module.exports = {
