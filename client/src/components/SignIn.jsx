@@ -36,7 +36,7 @@ const SignIn = () => {
           toast.success("Signed In successfully", {
             id: "authSuccess",
           });
-          setTimeout(() => window.location.reload(), 2000);
+          setTimeout(() => navigate("/Home"), 2000);
         } else if (data.status === RESPONSE_STATUS.ERROR) {
           toast.error(data.message, {
             id: "authError",
