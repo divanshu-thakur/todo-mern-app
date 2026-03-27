@@ -121,7 +121,7 @@ const ProfilePage = () => {
       </Box>
 
       <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Card
             sx={{
               background: 'rgba(255, 255, 255, 0.1)',
@@ -157,7 +157,7 @@ const ProfilePage = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} md={8}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <Card
             sx={{
               background: 'rgba(255, 255, 255, 0.1)',
@@ -184,7 +184,7 @@ const ProfilePage = () => {
 
             <Box component="form" onSubmit={handleSubmit}>
               <Grid container spacing={3}>
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <TextField
                     fullWidth
                     label="Username"
@@ -200,7 +200,7 @@ const ProfilePage = () => {
                   />
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <TextField
                     fullWidth
                     label="Email"
@@ -219,14 +219,14 @@ const ProfilePage = () => {
 
                 {isEditing && (
                   <>
-                    <Grid item xs={12}>
+                    <Grid size={{ xs: 12 }}>
                       <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.2)', my: 2 }} />
                       <Typography variant="subtitle2" sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 2 }}>
                         Change Password (optional)
                       </Typography>
                     </Grid>
 
-                    <Grid item xs={12} sm={6}>
+                    <Grid size={{ xs: 12, sm: 6 }}>
                       <TextField
                         fullWidth
                         label="New Password"
@@ -242,7 +242,7 @@ const ProfilePage = () => {
                       />
                     </Grid>
 
-                    <Grid item xs={12} sm={6}>
+                    <Grid size={{ xs: 12, sm: 6 }}>
                       <TextField
                         fullWidth
                         label="Confirm New Password"

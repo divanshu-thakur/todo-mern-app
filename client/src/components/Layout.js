@@ -1,6 +1,6 @@
 import React from 'react';
 import Footer from "./Footer";
-import { Box, AppBar, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemIcon, ListItemText, Avatar, Button } from '@mui/material';
+import { Box, AppBar, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemIcon, ListItemText, Avatar, Button, ListItemButton } from '@mui/material';
 import { Menu as MenuIcon, Dashboard, Assignment, Person, Logout, Close } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -60,62 +60,72 @@ const Layout = ({ children }) => {
       <List sx={{ pt: 2 }}>
         {menuItems.map((item) => (
           <ListItem
-            button
             key={item.text}
-            onClick={() => {
-              navigate(item.path);
-              dispatch(setSidebarOpen(false));
-            }}
+            disablePadding
             sx={{
-              mx: 1,
-              borderRadius: 2,
               mb: 1,
-              backgroundColor: location.pathname === item.path ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
-              '&:hover': {
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              },
             }}
           >
-            <ListItemIcon sx={{ color: 'white', minWidth: 40 }}>
-              {item.icon}
-            </ListItemIcon>
-            <ListItemText
-              primary={item.text}
+            <ListItemButton
+              onClick={() => {
+                navigate(item.path);
+                dispatch(setSidebarOpen(false));
+              }}
               sx={{
-                '& .MuiListItemText-primary': {
-                  color: 'white',
-                  fontWeight: location.pathname === item.path ? 600 : 400,
+                mx: 1,
+                borderRadius: 2,
+                backgroundColor: location.pathname === item.path ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
                 },
               }}
-            />
+            >
+              <ListItemIcon sx={{ color: 'white', minWidth: 40 }}>
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText
+                primary={item.text}
+                sx={{
+                  '& .MuiListItemText-primary': {
+                    color: 'white',
+                    fontWeight: location.pathname === item.path ? 600 : 400,
+                  },
+                }}
+              />
+            </ListItemButton>
           </ListItem>
         ))}
 
         <ListItem
-          button
-          onClick={handleLogout}
+          disablePadding
           sx={{
-            mx: 1,
-            borderRadius: 2,
             mt: 4,
-            backgroundColor: 'rgba(244, 67, 54, 0.1)',
-            '&:hover': {
-              backgroundColor: 'rgba(244, 67, 54, 0.2)',
-            },
           }}
         >
-          <ListItemIcon sx={{ color: '#f44336', minWidth: 40 }}>
-            <Logout />
-          </ListItemIcon>
-          <ListItemText
-            primary="Logout"
+          <ListItemButton
+            onClick={handleLogout}
             sx={{
-              '& .MuiListItemText-primary': {
-                color: '#f44336',
-                fontWeight: 500,
+              mx: 1,
+              borderRadius: 2,
+              backgroundColor: 'rgba(244, 67, 54, 0.1)',
+              '&:hover': {
+                backgroundColor: 'rgba(244, 67, 54, 0.2)',
               },
             }}
-          />
+          >
+            <ListItemIcon sx={{ color: '#f44336', minWidth: 40 }}>
+              <Logout />
+            </ListItemIcon>
+            <ListItemText
+              primary="Logout"
+              sx={{
+                '& .MuiListItemText-primary': {
+                  color: '#f44336',
+                  fontWeight: 500,
+                },
+              }}
+            />
+          </ListItemButton>
         </ListItem>
       </List>
     </Box>
@@ -177,17 +187,25 @@ const Layout = ({ children }) => {
       </Drawer>
 
       <Box
-        component="main"
         sx={{
+          display: 'flex',
+          flexDirection: 'column',
           flexGrow: 1,
-          p: 3,
-          mt: 8,
-          minHeight: 'calc(100vh - 64px)',
+          minHeight: '100vh',
         }}
       >
-        {children}
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            mt: 8,
+          }}
+        >
+          {children}
+        </Box>
+        <Footer />
       </Box>
-      {/* <Footer /> */}
     </Box>
   );
 };

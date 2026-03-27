@@ -202,7 +202,7 @@ const TodoFormModal = () => {
           borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
         }}
       >
-        <Typography variant="h5" sx={{ fontWeight: 600 }}>
+        <Typography variant="h5" component="span" sx={{ fontWeight: 600 }}>
           {isEditMode ? 'Edit Task' : 'Create New Task'}
         </Typography>
         <IconButton onClick={handleClose} sx={{ color: 'white' }}>

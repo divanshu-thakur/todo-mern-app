@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { signUp, clearError } from '../redux/slices/authSlice';
 import { showSnackbar } from '../redux/slices/uiSlice';
+import Footer from '../components/Footer';
 
 const SignUpPage = () => {
   const dispatch = useDispatch();
@@ -105,205 +106,214 @@ const SignUpPage = () => {
       sx={{
         minHeight: '100vh',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        flexDirection: 'column',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        p: 2,
       }}
     >
-      <Container maxWidth="sm">
-        <Paper
-          elevation={0}
-          sx={{
-            p: 4,
-            background: 'rgba(255, 255, 255, 0.1)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            borderRadius: 4,
-            textAlign: 'center',
-          }}
-        >
-          <Box sx={{ mb: 4 }}>
-            <SignUpIcon sx={{ fontSize: 48, color: 'white', mb: 2 }} />
-            <Typography variant="h4" component="h1" sx={{ color: 'white', fontWeight: 700, mb: 1 }}>
-              Create Account
-            </Typography>
-            <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-              Join us to organize your tasks efficiently
-            </Typography>
-          </Box>
+      <Box
+        sx={{
+          flexGrow: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          p: 2,
+        }}
+      >
+        <Container maxWidth="sm">
+          <Paper
+            elevation={0}
+            sx={{
+              p: 4,
+              background: 'rgba(255, 255, 255, 0.1)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              borderRadius: 4,
+              textAlign: 'center',
+            }}
+          >
+            <Box sx={{ mb: 4 }}>
+              <SignUpIcon sx={{ fontSize: 48, color: 'white', mb: 2 }} />
+              <Typography variant="h4" component="h1" sx={{ color: 'white', fontWeight: 700, mb: 1 }}>
+                Create Account
+              </Typography>
+              <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+                Join us to organize your tasks efficiently
+              </Typography>
+            </Box>
 
-          {error && (
-            <Alert 
-              severity="error" 
-              sx={{ 
-                mb: 3, 
-                background: 'rgba(244, 67, 54, 0.1)',
-                color: 'white',
-                '& .MuiAlert-icon': { color: '#f44336' }
-              }}
-            >
-              {error.message || 'Registration failed. Please try again.'}
-            </Alert>
-          )}
-
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <TextField
-              fullWidth
-              id="userName"
-              name="userName"
-              label="Username"
-              value={formData.userName}
-              onChange={handleChange}
-              required
-              error={!!validationErrors.userName}
-              helperText={validationErrors.userName}
-              sx={{ mb: 3 }}
-              InputLabelProps={{
-                sx: { color: 'rgba(255, 255, 255, 0.7)' }
-              }}
-              InputProps={{
-                sx: { color: 'white' }
-              }}
-              FormHelperTextProps={{
-                sx: { color: '#f44336' }
-              }}
-            />
-
-            <TextField
-              fullWidth
-              id="email"
-              name="email"
-              label="Email Address"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              error={!!validationErrors.email}
-              helperText={validationErrors.email}
-              sx={{ mb: 3 }}
-              InputLabelProps={{
-                sx: { color: 'rgba(255, 255, 255, 0.7)' }
-              }}
-              InputProps={{
-                sx: { color: 'white' }
-              }}
-              FormHelperTextProps={{
-                sx: { color: '#f44336' }
-              }}
-            />
-            
-            <TextField
-              fullWidth
-              id="password"
-              name="password"
-              label="Password"
-              type={showPassword ? 'text' : 'password'}
-              value={formData.password}
-              onChange={handleChange}
-              required
-              error={!!validationErrors.password}
-              helperText={validationErrors.password}
-              sx={{ mb: 3 }}
-              InputLabelProps={{
-                sx: { color: 'rgba(255, 255, 255, 0.7)' }
-              }}
-              InputProps={{
-                sx: { color: 'white' },
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={() => setShowPassword(!showPassword)}
-                      edge="end"
-                      sx={{ color: 'rgba(255, 255, 255, 0.7)' }}
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              FormHelperTextProps={{
-                sx: { color: '#f44336' }
-              }}
-            />
-
-            <TextField
-              fullWidth
-              id="confirmPassword"
-              name="confirmPassword"
-              label="Confirm Password"
-              type={showConfirmPassword ? 'text' : 'password'}
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-              error={!!validationErrors.confirmPassword}
-              helperText={validationErrors.confirmPassword}
-              sx={{ mb: 4 }}
-              InputLabelProps={{
-                sx: { color: 'rgba(255, 255, 255, 0.7)' }
-              }}
-              InputProps={{
-                sx: { color: 'white' },
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle confirm password visibility"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      edge="end"
-                      sx={{ color: 'rgba(255, 255, 255, 0.7)' }}
-                    >
-                      {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              FormHelperTextProps={{
-                sx: { color: '#f44336' }
-              }}
-            />
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled={loading}
-              sx={{
-                py: 1.5,
-                mb: 3,
-                fontSize: '1.1rem',
-                background: 'linear-gradient(45deg, rgba(147, 51, 234, 0.8), rgba(59, 130, 246, 0.8))',
-                '&:hover': {
-                  background: 'linear-gradient(45deg, rgba(147, 51, 234, 0.9), rgba(59, 130, 246, 0.9))',
-                },
-                '&:disabled': {
-                  background: 'rgba(255, 255, 255, 0.3)',
-                },
-              }}
-            >
-              {loading ? 'Creating Account...' : 'Sign Up'}
-            </Button>
-
-            <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-              Already have an account?{' '}
-              <Link
-                component={RouterLink}
-                to="/login"
-                sx={{
+            {error && (
+              <Alert 
+                severity="error" 
+                sx={{ 
+                  mb: 3, 
+                  background: 'rgba(244, 67, 54, 0.1)',
                   color: 'white',
-                  textDecoration: 'none',
-                  fontWeight: 600,
+                  '& .MuiAlert-icon': { color: '#f44336' }
+                }}
+              >
+                {error.message || 'Registration failed. Please try again.'}
+              </Alert>
+            )}
+
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+              <TextField
+                fullWidth
+                id="userName"
+                name="userName"
+                label="Username"
+                value={formData.userName}
+                onChange={handleChange}
+                required
+                error={!!validationErrors.userName}
+                helperText={validationErrors.userName}
+                sx={{ mb: 3 }}
+                InputLabelProps={{
+                  sx: { color: 'rgba(255, 255, 255, 0.7)' }
+                }}
+                InputProps={{
+                  sx: { color: 'white' }
+                }}
+                FormHelperTextProps={{
+                  sx: { color: '#f44336' }
+                }}
+              />
+
+              <TextField
+                fullWidth
+                id="email"
+                name="email"
+                label="Email Address"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                error={!!validationErrors.email}
+                helperText={validationErrors.email}
+                sx={{ mb: 3 }}
+                InputLabelProps={{
+                  sx: { color: 'rgba(255, 255, 255, 0.7)' }
+                }}
+                InputProps={{
+                  sx: { color: 'white' }
+                }}
+                FormHelperTextProps={{
+                  sx: { color: '#f44336' }
+                }}
+              />
+              
+              <TextField
+                fullWidth
+                id="password"
+                name="password"
+                label="Password"
+                type={showPassword ? 'text' : 'password'}
+                value={formData.password}
+                onChange={handleChange}
+                required
+                error={!!validationErrors.password}
+                helperText={validationErrors.password}
+                sx={{ mb: 3 }}
+                InputLabelProps={{
+                  sx: { color: 'rgba(255, 255, 255, 0.7)' }
+                }}
+                InputProps={{
+                  sx: { color: 'white' },
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() => setShowPassword(!showPassword)}
+                        edge="end"
+                        sx={{ color: 'rgba(255, 255, 255, 0.7)' }}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                FormHelperTextProps={{
+                  sx: { color: '#f44336' }
+                }}
+              />
+
+              <TextField
+                fullWidth
+                id="confirmPassword"
+                name="confirmPassword"
+                label="Confirm Password"
+                type={showConfirmPassword ? 'text' : 'password'}
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+                error={!!validationErrors.confirmPassword}
+                helperText={validationErrors.confirmPassword}
+                sx={{ mb: 4 }}
+                InputLabelProps={{
+                  sx: { color: 'rgba(255, 255, 255, 0.7)' }
+                }}
+                InputProps={{
+                  sx: { color: 'white' },
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle confirm password visibility"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        edge="end"
+                        sx={{ color: 'rgba(255, 255, 255, 0.7)' }}
+                      >
+                        {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                FormHelperTextProps={{
+                  sx: { color: '#f44336' }
+                }}
+              />
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                disabled={loading}
+                sx={{
+                  py: 1.5,
+                  mb: 3,
+                  fontSize: '1.1rem',
+                  background: 'linear-gradient(45deg, rgba(147, 51, 234, 0.8), rgba(59, 130, 246, 0.8))',
                   '&:hover': {
-                    textDecoration: 'underline',
+                    background: 'linear-gradient(45deg, rgba(147, 51, 234, 0.9), rgba(59, 130, 246, 0.9))',
+                  },
+                  '&:disabled': {
+                    background: 'rgba(255, 255, 255, 0.3)',
                   },
                 }}
               >
-                Sign In
-              </Link>
-            </Typography>
-          </Box>
-        </Paper>
-      </Container>
+                {loading ? 'Creating Account...' : 'Sign Up'}
+              </Button>
+
+              <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+                Already have an account?{' '}
+                <Link
+                  component={RouterLink}
+                  to="/login"
+                  sx={{
+                    color: 'white',
+                    textDecoration: 'none',
+                    fontWeight: 600,
+                    '&:hover': {
+                      textDecoration: 'underline',
+                    },
+                  }}
+                >
+                  Sign In
+                </Link>
+              </Typography>
+            </Box>
+          </Paper>
+        </Container>
+      </Box>
+      <Footer />
     </Box>
   );
 };

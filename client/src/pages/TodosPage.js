@@ -181,7 +181,7 @@ const TodoCard = ({ todo, onEdit, onDelete, onToggle }) => {
 
 const TodosPage = () => {
   const dispatch = useDispatch();
-  const { items: todos, loading, filters } = useSelector((state) => state.todos);
+  const { items: todos = [], loading, filters } = useSelector((state) => state.todos);
   const [searchText, setSearchText] = useState('');
   const [filterPriority, setFilterPriority] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
@@ -246,7 +246,7 @@ const TodosPage = () => {
     }
   };
 
-  const filteredTodos = todos.filter((todo) => {
+  const filteredTodos = todos?.filter((todo) => {
     if (!showCompleted && todo.completed) return false;
     if (filterPriority && todo.priority !== filterPriority) return false;
     if (filterCategory && todo.category !== filterCategory) return false;
@@ -260,7 +260,7 @@ const TodosPage = () => {
     return true;
   });
 
-  const categories = [...new Set(todos.map((todo) => todo.category).filter(Boolean))];
+  const categories = [...new Set((todos || []).map((todo) => todo.category).filter(Boolean))];
 
   return (
     <Box>
@@ -299,7 +299,7 @@ const TodosPage = () => {
         }}
       >
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <TextField
               fullWidth
               placeholder="Search tasks..."
@@ -311,7 +311,7 @@ const TodosPage = () => {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={2}>
+          <Grid size={{ xs: 12, sm: 6, md: 2 }}>
             <FormControl fullWidth>
               <InputLabel sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>Priority</InputLabel>
               <Select
@@ -327,7 +327,7 @@ const TodosPage = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <FormControl fullWidth>
               <InputLabel sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>Category</InputLabel>
               <Select
@@ -345,7 +345,7 @@ const TodosPage = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid size={{ xs: 12, md: 3 }}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -368,7 +368,7 @@ const TodosPage = () => {
           {filteredTodos.length > 0 ? (
             <Grid container spacing={3}>
               {filteredTodos.map((todo) => (
-                <Grid item xs={12} sm={6} md={4} key={todo._id}>
+                <Grid size={{ xs: 12, sm: 6, md: 4 }} key={todo._id}>
                   <TodoCard
                     todo={todo}
                     onEdit={handleEditTodo}

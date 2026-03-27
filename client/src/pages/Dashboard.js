@@ -82,7 +82,7 @@ const TodoItem = ({ todo }) => (
         }}
       />
     </Box>
-    {todo.description && (
+    {todo?.description && (
       <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 1 }}>
         {todo.description.substring(0, 100)}
         {todo.description.length > 100 ? '...' : ''}
@@ -92,9 +92,9 @@ const TodoItem = ({ todo }) => (
       {todo.category && (
         <Chip label={todo.category} size="small" sx={{ background: 'rgba(255, 255, 255, 0.2)', color: 'white' }} />
       )}
-      {todo.subtasks && todo.subtasks.length > 0 && (
+      {todo.subtasks && todo.subtasks?.length > 0 && (
         <Chip
-          label={`\${todo.subtasks.filter((s) => s.completed).length}/\${todo.subtasks.length} subtasks`}
+          label={`\${todo.subtasks.filter((s) => s.completed)?.length}/\${todo.subtasks?.length} subtasks`}
           size="small"
           sx={{ background: 'rgba(255, 255, 255, 0.2)', color: 'white' }}
         />
@@ -105,20 +105,20 @@ const TodoItem = ({ todo }) => (
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { items: todos, loading } = useSelector((state) => state.todos);
-  const { user } = useSelector((state) => state.auth);
+  const { items: todos = [], loading } = useSelector((state) => state.todos);
+  const { user = {} } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(fetchTodos());
   }, [dispatch]);
 
-  const totalTodos = todos.length;
-  const completedTodos = todos.filter((todo) => todo.completed).length;
-  const pendingTodos = totalTodos - completedTodos;
+  const totalTodos = todos?.length || 0;
+  const completedTodos = todos?.filter((todo) => todo?.completed)?.length || 0;
+  const pendingTodos = Math.max(0, totalTodos - completedTodos);
   const completionRate = totalTodos > 0 ? Math.round((completedTodos / totalTodos) * 100) : 0;
   
-  const highPriorityTodos = todos.filter((todo) => !todo.completed && todo.priority === 'high').length;
-  const recentTodos = todos.slice(0, 5);
+  const highPriorityTodos = todos?.filter((todo) => todo && !todo.completed && todo.priority === 'high')?.length || 0;
+  const recentTodos = todos?.slice(0, 5) || [];
 
   return (
     <Box>
@@ -136,7 +136,7 @@ const Dashboard = () => {
       ) : (
         <>
           <Grid container spacing={3} mb={4}>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <StatCard
                 title="Total Tasks"
                 value={totalTodos}
@@ -145,7 +145,7 @@ const Dashboard = () => {
                 subtitle="All your tasks"
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <StatCard
                 title="Completed"
                 value={completedTodos}
@@ -154,7 +154,7 @@ const Dashboard = () => {
                 subtitle={`\${completionRate}% completion rate`}
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <StatCard
                 title="Pending"
                 value={pendingTodos}
@@ -163,7 +163,7 @@ const Dashboard = () => {
                 subtitle="Tasks to complete"
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <StatCard
                 title="High Priority"
                 value={highPriorityTodos}

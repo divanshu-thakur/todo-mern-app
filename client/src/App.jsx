@@ -150,7 +150,6 @@ function App() {
                 }
               />
             </Routes>
-            <Footer />
           </Router>
         </LocalizationProvider>
       </ThemeProvider>
