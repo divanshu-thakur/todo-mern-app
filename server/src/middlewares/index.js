@@ -1,6 +1,6 @@
 
 module.exports = {
-	asyncExecute: require('./asyncExecute'),
+	errorHandler: require('./errorHandler'),
 	isAuthenticated: require('./isAuthenticated'),
 	validateRequest: require('./validateRequest'),
 };

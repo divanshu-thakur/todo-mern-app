@@ -5,6 +5,7 @@ const bcryptUtil = require('../../utils/bcrypt');
 const jwtUtil = require('../../utils/jwt');
 const AppError = require('../../utils/appError');
 const { ERROR_CODES } = require('../../constants/error');
+const HTTP_STATUS = require('../../constants/httpStatus');
 
 let signUp = async (data) => {
 	let duplicateUserObj = await DAL.findByUserName(data.userName);
@@ -39,14 +40,14 @@ let signIn = async (userNameOrEmail, password) => {
 			let token = jwtUtil.generateJWT(userObj);
 			return token;
 		} else {
-			throw new AppError(ERROR_CODES.INVALID_USERNAME_OR_PASSWORD);
+			throw new AppError(ERROR_CODES.INVALID_USERNAME_OR_PASSWORD, HTTP_STATUS.UNAUTHORIZED);
 		}
 	} else {
 		// Cause a delay to avoid brute force attacks.
 		let fakePass = 'somePassword';
 		await bcryptUtil.comparePassword(password, fakePass);
 
-		throw new AppError(ERROR_CODES.INVALID_USERNAME_OR_PASSWORD);
+		throw new AppError(ERROR_CODES.INVALID_USERNAME_OR_PASSWORD, HTTP_STATUS.UNAUTHORIZED);
 	}
 };
 

@@ -1,13 +1,13 @@
 
 const router = require('express').Router();
-const { asyncExecute, isAuthenticated } = require('../middlewares');
+const { isAuthenticated } = require('../middlewares');
 const controller = require('../components/user/controller');
 
-router.post('/signUp', asyncExecute(controller.signUp));
-router.post('/signIn', asyncExecute(controller.signIn));
-router.post('/logout', asyncExecute(isAuthenticated), asyncExecute(controller.logout));
+router.post('/signUp', controller.signUp);
+router.post('/signIn', controller.signIn);
+router.post('/logout', isAuthenticated, controller.logout);
 
-router.get('/profile', asyncExecute(isAuthenticated), asyncExecute(controller.getProfile));
-router.put('/profile', asyncExecute(isAuthenticated), asyncExecute(controller.updateProfile));
+router.get('/profile', isAuthenticated, controller.getProfile);
+router.put('/profile', isAuthenticated, controller.updateProfile);
 
 module.exports = router;

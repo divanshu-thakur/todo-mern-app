@@ -14,10 +14,7 @@ const app = express();
 
 // db
 mongoose.set('strictQuery', true);
-mongoose.connect(process.env.MONGO_URI, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	}).then(() => console.log('Mongo connection established'))
+mongoose.connect(process.env.MONGO_URI).then(() => console.log('Mongo connection established'))
 .catch((error) => console.log('Connection error: ', error));
 
 // middlewares
@@ -33,7 +30,7 @@ app.use(
 	})
 );
 
-app.options('*', Cors());
+app.options(/(.*)/, Cors());
 
 /* adding response headers */
 app.all('', function (req, res, next) {
@@ -52,6 +49,9 @@ app.all('', function (req, res, next) {
 
 // routes
 app.use(`/api`, require('./apis'));
+
+// Global Error Handler
+app.use(require('./middlewares').errorHandler);
 
 // listener
 const server = app.listen(process.env.SERVER_PORT, () =>

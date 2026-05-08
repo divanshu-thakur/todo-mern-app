@@ -1,18 +1,18 @@
 
 const router = require('express').Router();
-const { asyncExecute, isAuthenticated } = require('../middlewares');
+const { isAuthenticated } = require('../middlewares');
 const controller = require('../components/todo/controller');
 
 // Todo CRUD routes
-router.post('/', asyncExecute(isAuthenticated), asyncExecute(controller.createTodo));
-router.get('/', asyncExecute(isAuthenticated), asyncExecute(controller.getTodos));
-router.get('/:id', asyncExecute(isAuthenticated), asyncExecute(controller.getTodoById));
-router.put('/:id', asyncExecute(isAuthenticated), asyncExecute(controller.updateTodo));
-router.delete('/:id', asyncExecute(isAuthenticated), asyncExecute(controller.deleteTodo));
+router.post('/', isAuthenticated, controller.createTodo);
+router.get('/', isAuthenticated, controller.getTodos);
+router.get('/:id', isAuthenticated, controller.getTodoById);
+router.put('/:id', isAuthenticated, controller.updateTodo);
+router.delete('/:id', isAuthenticated, controller.deleteTodo);
 
 // Subtask routes
-router.post('/:id/subtasks', asyncExecute(isAuthenticated), asyncExecute(controller.createSubtask));
-router.put('/:todoId/subtasks/:subtaskId', asyncExecute(isAuthenticated), asyncExecute(controller.updateSubtask));
-router.delete('/:todoId/subtasks/:subtaskId', asyncExecute(isAuthenticated), asyncExecute(controller.deleteSubtask));
+router.post('/:id/subtasks', isAuthenticated, controller.createSubtask);
+router.put('/:todoId/subtasks/:subtaskId', isAuthenticated, controller.updateSubtask);
+router.delete('/:todoId/subtasks/:subtaskId', isAuthenticated, controller.deleteSubtask);
 
 module.exports = router;

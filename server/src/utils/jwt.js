@@ -2,9 +2,14 @@
 const jwt = require('jsonwebtoken');
 const { ERROR_CODES } = require('../constants/error');
 const AppError = require('./appError');
+const HTTP_STATUS = require('../constants/httpStatus');
 
-let options = {
+let signOptions = {
 	expiresIn: process.env.JWT_TOKEN_EXPIRATION,
+	subject: 'Todo App Authentication Token',
+};
+
+let verifyOptions = {
 	subject: 'Todo App Authentication Token',
 };
 
@@ -14,23 +19,23 @@ let generateJWT = (userObj) => {
 			id: userObj._id,
 		};
 
-		let token = jwt.sign(payload, process.env.JWT_SECRET_KEY, options);
+		let token = jwt.sign(payload, process.env.JWT_SECRET_KEY, signOptions);
 
 		return token;
 
 	} catch (error) {
-		throw new AppError(ERROR_CODES.JWT_SIGNING_ERROR);
+		throw new AppError(ERROR_CODES.JWT_SIGNING_ERROR, HTTP_STATUS.UNAUTHORIZED);
 	}
 };
 
 let verifyJWT = (token) => {
 	try {
-		let payload = jwt.verify(token, process.env.JWT_SECRET_KEY, options);
+		let payload = jwt.verify(token, process.env.JWT_SECRET_KEY, verifyOptions);
 
 		return payload;
 		
 	} catch (error) {
-		throw new AppError(ERROR_CODES.AUTHENTICATION_ERROR);
+		throw new AppError(ERROR_CODES.AUTHENTICATION_ERROR, HTTP_STATUS.UNAUTHORIZED);
 	}
 };
 
